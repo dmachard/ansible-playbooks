@@ -1,0 +1,46 @@
+- hosts: all
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+  - name: Add a new user named {{ create_user }}
+    ansible.builtin.user:
+      name: "{{ create_user }}"
+      state: present
+
+  - name: Add the new user to the sudoers
+    ansible.builtin.copy:
+      dest: "/etc/sudoers.d/{{ create_user }}"
+      content: "{{ create_user }}  ALL=(ALL)  NOPASSWD: ALL"
+
+  - name: Deploy SSH Key
+    ansible.posix.authorized_key:
+      user: "{{ create_user }}"
+      key: "{{ public_key }}"
+      state: present
+
+  - name: Disable Password Authentication
+    ansible.builtin.lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^PasswordAuthentication'
+      line: "PasswordAuthentication no"
+      state: present
+      backup: yes
+    notify:
+       - restart_ssh
+
+  - name: Disable Root Login
+    ansible.builtin.lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin'
+      line: "PermitRootLogin no"
+      state: present
+      backup: yes
+    notify:
+      - restart_ssh
+
+  handlers:
+  - name: restart_ssh
+    service:
+      name: sshd
+      state: restarted
