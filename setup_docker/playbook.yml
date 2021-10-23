@@ -1,0 +1,20 @@
+- hosts: all
+  become: true
+
+  tasks:
+  - name: Add Docker CE repository
+    ansible.builtin.get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker-ce.repo
+      force: yes
+
+  - name: Install Docker CE
+    ansible.builtin.dnf:
+      name : docker-ce
+      state: latest
+
+  - name: Start service dockerd
+    ansible.builtin.service:
+      name: docker
+      enabled: yes
+      state: started

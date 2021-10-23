@@ -1,0 +1,1 @@
+This playbook will install Docker CE.
