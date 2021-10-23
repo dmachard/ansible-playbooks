@@ -1,0 +1,13 @@
+- name: Update repositories cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Update system packages
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+
+- name: Install additionnal packages
+  ansible.builtin.apt:
+    name : "{{ additionnal_packages }}"
+    state: latest
