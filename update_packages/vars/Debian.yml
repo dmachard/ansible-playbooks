@@ -1,1 +1,5 @@
-additionnal_packages: [ 'curl', 'vim', 'ca-certificates' ]
+additionnal_packages:
+- 'curl'
+- 'vim'
+- 'ca-certificates'
+- 'net-tools'
