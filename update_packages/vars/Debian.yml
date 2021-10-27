@@ -3,3 +3,4 @@ additionnal_packages:
 - 'vim'
 - 'ca-certificates'
 - 'net-tools'
+- 'tcpdump'
