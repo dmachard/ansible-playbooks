@@ -1,0 +1,36 @@
+- name: init docker swarm manager
+  hosts: swarm_manager
+  become: true
+
+  tasks:
+   - name: Install python binding for firewalld
+     ansible.builtin.dnf:
+       name: python3-firewall
+       state: present
+
+  - name: Check if Swarm has already been Initialized
+    command: docker node ls
+    register: swarm_status
+    ignore_errors: true
+
+  - name: Initialize Docker Swarm
+    command: docker swarm init --advertise-addr={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:2377
+    when: swarm_status.rc != 0
+
+  - name: Get the worker join-token
+    command: docker swarm join-token --quiet worker
+    register: worker_token
+
+  - name: test
+    ansible.posix.firewalld:
+      service: docker-swarm
+      permanent: yes
+      state: enabled
+
+- name: add workers to the swarm
+  hosts: swarm_workers
+  become: true
+
+  tasks:
+  - name: Add Workers to the Swarm
+    command: docker swarm join --token {{ hostvars[groups['swarm_manager'][0]]['worker_token'].stdout }} {{ hostvars[groups['swarm_manager'][0]]['ansible_default_ipv4']['address'] }}:2377
