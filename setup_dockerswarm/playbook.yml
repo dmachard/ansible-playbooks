@@ -14,3 +14,10 @@
     vars:
       token: "{{ hostvars[groups['swarm_manager'][0]]['worker_token'].stdout }}"
       manager: "{{ hostvars[groups['swarm_manager'][0]]['ansible_default_ipv4']['address'] }}"
+
+- name: Install GlusterFS
+  hosts: all
+  become: true
+
+  tasks:
+  - import_tasks: tasks/setup_glusterfs.yml

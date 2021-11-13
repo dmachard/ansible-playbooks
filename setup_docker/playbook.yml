@@ -5,3 +5,9 @@
   tasks:
     - name: Running for {{ ansible_os_family }}
       include_tasks: tasks/{{ ansible_os_family }}.yml
+    
+    - name: adding ansible user to group docker
+      user:
+        name: automation
+        groups: docker
+        append: yes
