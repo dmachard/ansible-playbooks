@@ -2,11 +2,11 @@
 
 A collection of minimalist Ansible playbooks for automating server setups.
 
-- Initial ansible setup: this playbook will prepare your ansible environnements
-- Update system packages: this playbook will update RHEL & Debian family Linux distros. Additionnal packages can be also installed.
-- Install Docker CE: this playbook install docker-ce
-- Install Docker Swarm: this playbook configure a docker swarm cluster
-- Install GlusterFS: this playbook install and configure a glusterfs cluster (distributed file system)
+- [Initial ansible setup](./setup_ansible): this playbook will prepare your ansible environnements
+- [Update system packages](./update_packages/): this playbook will update RHEL & Debian family Linux distros. Additionnal packages can be also installed.
+- [Install Docker CE](./setup_docker/): this playbook install docker-ce
+- [Install Docker Swarm](./setup_dockerswarm/): this playbook configure a docker swarm cluster
+- [Install GlusterFS](./setup_glusterfs/): this playbook install and configure a glusterfs cluster (distributed file system)
 
 # Inventory
 
