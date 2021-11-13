@@ -1,0 +1,12 @@
+- name: Probing the Nodes
+  command: gluster peer probe {{ item }}
+  with_items: "{{ groups['workers'] }}"
+
+- name: Show cluster status
+  command: gluster pool list
+
+- name: Create one volume
+  command: gluster volume create staging-gfs replica 3 docker01:/gluster/volume1 docker02:/gluster/volume1 docker03:/gluster/volume1 force
+
+- name: Start the volume
+  command: gluster volume start staging-gfs

@@ -1,0 +1,21 @@
+- name: Update /etc/hosts
+  hosts: all
+  become: true
+
+  tasks:
+  - import_tasks: tasks/setup_hosts.yml
+
+- name: Install GlusterFS
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Running for {{ ansible_os_family }}
+    include_tasks: tasks/install_{{ ansible_os_family }}.yml
+
+- name: Init GlusterFS on master/manager machine only
+  hosts: manager
+  become: true
+
+  tasks:
+  - import_tasks: tasks/setup_glusterfs.yml

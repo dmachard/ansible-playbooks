@@ -1,0 +1,59 @@
+- name: Get GlusterFS GPG key
+  apt_key:
+    url: https://download.gluster.org/pub/gluster/glusterfs/9/rsa.pub
+    state: present
+
+- name: Install software-properties-common
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: present
+
+- name: Install GlusterFS repository
+  apt_repository:
+    repo: ppa:gluster/glusterfs-9
+
+- name: Install GlusterFS server
+  ansible.builtin.apt:
+    name: glusterfs-server
+    state: present
+
+- name: Start service glusterfs
+  ansible.builtin.service:
+    name: glusterd
+    enabled: yes
+    state: started
+
+- name: Open port on firewall
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+  - 24007/tcp
+  notify: reload firewall
+
+- name: Creates directory
+  file:
+    path: /gluster/volume1
+    state: directory
+
+- name: Mount volume
+  ansible.posix.mount:
+    path: /mnt
+    src: localhost:/staging-gfs
+    fstype: glusterfs
+    opts: defaults,_netdev,backupvolfile-server=localhost
+    boot: yes
+    state: present
+
+- name: Give permissions for docker
+  ansible.builtin.file:
+    path: /mnt
+    owner: root
+    group: docker
+    mode: "770"
+
+- name: reload firewall
+  systemd:
+    name: firewalld
+    state: reloaded
