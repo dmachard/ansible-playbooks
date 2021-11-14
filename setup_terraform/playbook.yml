@@ -1,0 +1,6 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Running for {{ ansible_os_family }}
+      include_tasks: tasks/{{ ansible_os_family }}.yml

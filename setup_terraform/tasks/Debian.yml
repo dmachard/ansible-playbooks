@@ -1,0 +1,14 @@
+- name: Get Terraform key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add terraform packages to Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main
+
+- name: Install Terraform
+  apt:
+    name: terraform
+    state: latest
+    update_cache: yes

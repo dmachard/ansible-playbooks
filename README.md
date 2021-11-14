@@ -7,30 +7,45 @@ A collection of minimalist Ansible playbooks for automating server setups.
 - [Install Docker CE](./setup_docker/): this playbook install docker-ce
 - [Install Docker Swarm](./setup_dockerswarm/): this playbook configure a docker swarm cluster
 - [Install GlusterFS](./setup_glusterfs/): this playbook install and configure a glusterfs cluster (distributed file system)
+- [Install Terraform](./setup_terraform/): this playbook install terraform
 
 # Inventory
 
 $ cat /etc/hosts
 
 ```bash
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.1.220	ansible
+
+192.168.1.221	docker-manager01
+192.168.1.222	docker-worker01
+192.168.1.223	docker-worker02
 ```
 
 $ cat inventory.ini
 
 ```
-[swarm-manager]
-docker-node01
+[automation]
+ansible
 
-[swarm-mngrs]
-docker-node02
+[swarm_managers]
+docker-manager01
 
-[swarm-workers]
-docker-node10
-docker-node11
+[swarm_workers]
+docker-worker01
+docker-worker02
 
-[glusterfs]
-docker-wkr01
-docker-wkr02
+[swarm:children]
+swarm_managers
+swarm_workers
+
+[glusterfs:children]
+swarm_workers
+
+[glusterfs_master]
+docker-worker01
 ```
 
 # Run-it
@@ -41,4 +56,5 @@ ansible-playbook update_packages/playbook.yml
 ansible-playbook setup_docker/playbook.yml
 ansible-playbook setup_dockerswarm/playbook.yml
 ansible-playbook setup_glusterfs/playbook.yml
+ansible-playbook --limit ansible setup_terraform/playbook.yml
 ```

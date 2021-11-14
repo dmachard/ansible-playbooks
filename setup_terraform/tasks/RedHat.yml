@@ -1,0 +1,10 @@
+- name: Add Terraform repository
+  ansible.builtin.get_url:
+    url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    dest: /etc/yum.repos.d/terraform.repo
+    force: yes
+
+- name: Install Terraform
+  ansible.builtin.dnf:
+    name: terraform
+    state: latest
