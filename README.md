@@ -10,13 +10,27 @@ A collection of minimalist Ansible playbooks for automating server setups.
 
 # Inventory
 
-```
-[manager]
-docker01
+$ cat /etc/hosts
 
-[workers]
-docker02
-docker03
+```bash
+```
+
+$ cat inventory.ini
+
+```
+[swarm-manager]
+docker-node01
+
+[swarm-mngrs]
+docker-node02
+
+[swarm-workers]
+docker-node10
+docker-node11
+
+[glusterfs]
+docker-wkr01
+docker-wkr02
 ```
 
 # Run-it

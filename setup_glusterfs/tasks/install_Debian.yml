@@ -22,6 +22,11 @@
     name: glusterd
     enabled: yes
     state: started
+    
+- name: Install python binding for firewalld
+  ansible.builtin.package:
+    name: python3-firewall
+    state: present
 
 - name: Open port on firewall
   ansible.posix.firewalld:
