@@ -7,3 +7,7 @@ The following steps are executed:
 - disable root login
 - disable ssh password authentication
 - restart ssh
+
+Vars:
+
+- create_user: name of the user for ansible

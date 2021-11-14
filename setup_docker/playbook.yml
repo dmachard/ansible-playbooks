@@ -1,13 +1,14 @@
 - hosts: all
   become: true
+  vars_files:
+    - vars/default.yml
 
-  tasks:
   tasks:
     - name: Running for {{ ansible_os_family }}
       include_tasks: tasks/{{ ansible_os_family }}.yml
     
-    - name: adding ansible user to group docker
+    - name: adding {{ user }} to group docker
       user:
-        name: automation
+        name: {{ user }}
         groups: docker
         append: yes
