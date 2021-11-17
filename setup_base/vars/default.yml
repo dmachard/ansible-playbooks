@@ -1,0 +1,9 @@
+timezone: "Europe/Paris"
+packages:
+- curl
+- jq
+- vim
+- wget
+- tcpdump
+- net-tools
+- ca-certificates

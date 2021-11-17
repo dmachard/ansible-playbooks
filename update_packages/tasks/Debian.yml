@@ -6,8 +6,3 @@
   ansible.builtin.apt:
     name: "*"
     state: latest
-
-- name: Install additionnal packages
-  ansible.builtin.apt:
-    name : "{{ additionnal_packages }}"
-    state: latest

@@ -1,0 +1,39 @@
+- hosts: all
+  become: true
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+  - name: Set hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+
+  - name: Set timezone
+    ansible.builtin.timezone:
+      name: "{{ timezone }}"
+
+  - name: install ntp
+    ansible.builtin.package:  
+      name: chrony
+      state: latest
+
+  - name: start ntp
+    ansible.builtin.service:
+      name: chronyd
+      enabled: yes
+      state: started
+
+  - name: Install additionnal packages
+    ansible.builtin.package:
+      name : "{{ item }}"
+      state: latest
+    with_items: "{{ packages }}"
+
+  - name: Reboot host and wait for it to restart
+    reboot:
+      msg: "Reboot initiated by Ansible"
+      connect_timeout: 5
+      reboot_timeout: 120
+      pre_reboot_delay: 0
+      post_reboot_delay: 30
+      test_command: uptime

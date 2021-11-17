@@ -1,6 +1,0 @@
-additionnal_packages: 
-- 'curl'
-- 'vim'
-- 'ca-certificates'
-- 'net-tools'
-- 'tcpdump'
