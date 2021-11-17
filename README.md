@@ -37,11 +37,15 @@ docker-manager01
 docker-worker01
 docker-worker02
 
-[glusterfs:children]
+[swarm:children]
+swarm_managers
 swarm_workers
 
-[glusterfs_master]
+[glusterfs]
+docker-manager01
 docker-worker01
+docker-worker02
+
 ```
 
 # Run-it
