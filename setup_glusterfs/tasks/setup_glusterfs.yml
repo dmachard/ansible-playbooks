@@ -12,6 +12,7 @@
 - name: Check if the volume already exists
   command: gluster volume status volume01 detail
   register: volume_status
+  ignore_errors: true
 
 - name: Show volume status
   debug: var=volume_status.rc
