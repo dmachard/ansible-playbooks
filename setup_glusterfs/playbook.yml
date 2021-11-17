@@ -4,12 +4,25 @@
   become: true
   vars_files:
     - vars/default.yml
-
   tasks:
   - name: Running for {{ ansible_os_family }}
     include_tasks: tasks/install_{{ ansible_os_family }}.yml
+  
+  - name: Configure firewalld
+    import_tasks: tasks/setup_firewall.yml
 
-  - import_tasks: tasks/setup_firewall.yml
-
+- name: Create trusted pool
+  hosts: glusterfs[0]
+  become: true
+  vars_files:
+    - vars/default.yml
+  tasks:
   - import_tasks: tasks/setup_glusterfs.yml
-    when: groups['glusterfs'][0]
+
+- name: Mount distributed volume
+  hosts: glusterfs
+  become: true
+  vars_files:
+    - vars/default.yml
+  tasks:
+  - import_tasks: tasks/mount_glusterfs.yml

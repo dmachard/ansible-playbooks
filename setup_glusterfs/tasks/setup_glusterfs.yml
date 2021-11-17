@@ -4,26 +4,22 @@
 
 - name: Show cluster status
   command: gluster pool list
+  register: gfs_status
 
-- name: Create one volume with 2 replica
-  command: "gluster volume create volume01 replica {{ replica }}} {{ hostvars[ groups['glusterfs'][0] ].ansible_hostname }}:{{ brick_dir }} {{ hostvars[ groups['glusterfs'][1] ].ansible_hostname }}:{{ brick_dir }}"
+- name: Show cluster status
+  debug: var=gfs_status.stdout
+
+- name: Check if the volume already exists
+  command: gluster volume status volume01 detail
+  register: volume_status
+
+- name: Show volume status
+  debug: var=volume_status.rc
+
+- name: Create volume
+  command: "gluster volume create volume01 replica 3 {{ hostvars[ groups['glusterfs'][0] ].ansible_hostname }}:{{ brick_dir }} {{ hostvars[ groups['glusterfs'][1] ].ansible_hostname }}:{{ brick_dir }} {{ hostvars[ groups['glusterfs'][2] ].ansible_hostname }}:{{ brick_dir }} force"
+  when: volume_status.rc != 0
 
 - name: Start the volume
   command: gluster volume start volume01
-
-- name: Mount volume
-  ansible.posix.mount:
-    path: "{{ mount_dir }}"
-    src: localhost:/volume01
-    fstype: glusterfs
-    opts: defaults,_netdev,backupvolfile-server=localhost
-    boot: yes
-    state: present
-
-- name: Ensure Gluster volume is mounted.
-  mount:
-    name: "{{ mount_dir }}"
-    src: localhost:/volume01
-    fstype: glusterfs
-    opts: "defaults,_netdev"
-    state: mounted
+  when: volume_status.rc != 0

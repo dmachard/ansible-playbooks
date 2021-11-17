@@ -1,3 +1,2 @@
 mount_dir: /mnt/docker-data
 brick_dir: /glusterfs/volume0/brick0
-replica: 2
