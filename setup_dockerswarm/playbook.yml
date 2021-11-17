@@ -5,27 +5,27 @@
   - import_tasks: tasks/setup_hosts.yml
 
 - name: Init the first manager
-  hosts: swarm-managers
+  hosts: swarm_managers
   become: true
   tasks:
   - import_tasks: tasks/setup_swarm.yml
-    when: groups['swarm-managers'][0]
+    when: groups['swarm_managers'][0]
 
 - name: Join all others manager
-  hosts: swarm-managers
+  hosts: swarm_managers
   become: true
   tasks:
   - import_tasks: tasks/setup_manager.yml
     vars:
-      token: "{{ hostvars[groups['swarm-managers'][0]]['manager_token'].stdout }}"
-      manager: "{{ hostvars[groups['swarm-managers'][0]]['ansible_default_ipv4']['address'] }}"
-    when: groups['swarm-managers'][1:]
+      token: "{{ hostvars[groups['swarm_managers'][0]]['manager_token'].stdout }}"
+      manager: "{{ hostvars[groups['swarm_managers'][0]]['ansible_default_ipv4']['address'] }}"
+    when: groups['swarm_managers'][1:]
 
 - name: Join all workers
-  hosts: swarm-workers
+  hosts: swarm_workers
   become: true
   tasks:
   - import_tasks: tasks/setup_worker.yml
     vars:
-      token: "{{ hostvars[groups['swarm-managers'][0]]['worker_token'].stdout }}"
-      manager: "{{ hostvars[groups['swarm-managers'][0]]['ansible_default_ipv4']['address'] }}"
+      token: "{{ hostvars[groups['swarm_managers'][0]]['worker_token'].stdout }}"
+      manager: "{{ hostvars[groups['swarm_managers'][0]]['ansible_default_ipv4']['address'] }}"

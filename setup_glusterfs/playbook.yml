@@ -1,21 +1,22 @@
 - name: Update /etc/hosts
-  hosts: all
+  hosts: glusterfs
   become: true
+  vars_files:
+    - vars/default.yml
 
   tasks:
   - import_tasks: tasks/setup_hosts.yml
 
 - name: Install GlusterFS
-  hosts: all
+  hosts: glusterfs
   become: true
-
   tasks:
   - name: Running for {{ ansible_os_family }}
     include_tasks: tasks/install_{{ ansible_os_family }}.yml
 
-- name: Init GlusterFS on master/manager machine only
-  hosts: manager
+- name: Init GlusterFS on master machine only
+  hosts: glusterfs
   become: true
-
   tasks:
   - import_tasks: tasks/setup_glusterfs.yml
+    when: groups['glusterfs'][0]

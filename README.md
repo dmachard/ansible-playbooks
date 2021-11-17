@@ -30,24 +30,12 @@ $ cat /etc/hosts
 $ cat inventory.ini
 
 ```
-[automation]
-ansible
-
-[system]
-docker-manager01
-docker-worker01
-docker-worker02
-
 [swarm_managers]
 docker-manager01
 
 [swarm_workers]
 docker-worker01
 docker-worker02
-
-[swarm:children]
-swarm_managers
-swarm_workers
 
 [glusterfs:children]
 swarm_workers

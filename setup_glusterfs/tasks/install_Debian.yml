@@ -39,21 +39,17 @@
 
 - name: Creates directory
   file:
-    path: /gluster/volume1
+    path: "{{ brick_dir }}"
     state: directory
 
-- name: Mount volume
-  ansible.posix.mount:
-    path: /mnt
-    src: localhost:/staging-gfs
-    fstype: glusterfs
-    opts: defaults,_netdev,backupvolfile-server=localhost
-    boot: yes
-    state: present
+- name: Creates directory
+  file:
+    path: "{{ mount_dir }}"
+    state: directory
 
 - name: Give permissions for docker
   ansible.builtin.file:
-    path: /mnt
+    path: "{{ mount_dir }}"
     owner: root
     group: docker
     mode: "770"
