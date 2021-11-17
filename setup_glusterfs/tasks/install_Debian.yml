@@ -22,20 +22,6 @@
     name: glusterd
     enabled: yes
     state: started
-    
-- name: Install python binding for firewalld
-  ansible.builtin.package:
-    name: python3-firewall
-    state: present
-
-- name: Open port on firewall
-  ansible.posix.firewalld:
-    port: "{{ item }}"
-    permanent: yes
-    state: enabled
-  loop:
-  - 24007/tcp
-  notify: reload firewall
 
 - name: Creates directory
   file:
@@ -53,8 +39,3 @@
     owner: root
     group: docker
     mode: "770"
-
-- name: reload firewall
-  systemd:
-    name: firewalld
-    state: reloaded

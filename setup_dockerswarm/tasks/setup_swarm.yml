@@ -1,20 +1,3 @@
-
-- name: Install python binding for firewalld
-  ansible.builtin.package:
-    name: python3-firewall
-    state: present
-
-- name: Open port on firewall
-  ansible.posix.firewalld:
-    service: docker-swarm
-    permanent: yes
-    state: enabled
-
-- name: reload service firewalld
-  systemd:
-    name: firewalld
-    state: reloaded
-
 - name: Check if Swarm has already been Initialized
   command: docker node ls
   register: swarm_status

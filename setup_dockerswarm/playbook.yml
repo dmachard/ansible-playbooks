@@ -1,15 +1,20 @@
 - name: Update /etc/hosts
-  hosts: all
+  hosts: swarm
   become: true
   tasks:
   - import_tasks: tasks/setup_hosts.yml
+  
+- name: Open firewalld
+  hosts: swarm
+  become: true
+  tasks:
+  - import_tasks: tasks/setup_firewall.yml
 
 - name: Init the first manager
-  hosts: swarm_managers
+  hosts: swarm_managers[0]
   become: true
   tasks:
   - import_tasks: tasks/setup_swarm.yml
-    when: groups['swarm_managers'][0]
 
 - name: Join all others manager
   hosts: swarm_managers

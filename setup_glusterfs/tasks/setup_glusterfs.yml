@@ -5,7 +5,7 @@
 - name: Show cluster status
   command: gluster pool list
 
-- name: Create one volume
+- name: Create one volume with 2 replica
   command: "gluster volume create volume01 replica {{ replica }}} {{ hostvars[ groups['glusterfs'][0] ].ansible_hostname }}:{{ brick_dir }} {{ hostvars[ groups['glusterfs'][1] ].ansible_hostname }}:{{ brick_dir }}"
 
 - name: Start the volume
