@@ -7,9 +7,6 @@
   tasks:
   - name: Running for {{ ansible_os_family }}
     include_tasks: tasks/install_{{ ansible_os_family }}.yml
-  
-  - name: Configure firewalld
-    import_tasks: tasks/setup_firewall.yml
 
 - name: Create trusted pool
   hosts: glusterfs[0]

@@ -7,4 +7,3 @@ packages:
 - tcpdump
 - net-tools
 - ca-certificates
-- firewalld

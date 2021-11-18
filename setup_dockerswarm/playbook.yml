@@ -3,12 +3,6 @@
   become: true
   tasks:
   - import_tasks: tasks/setup_hosts.yml
-  
-- name: Open firewalld
-  hosts: swarm
-  become: true
-  tasks:
-  - import_tasks: tasks/setup_firewall.yml
 
 - name: Init the first manager
   hosts: swarm_managers[0]

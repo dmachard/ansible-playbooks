@@ -5,10 +5,12 @@ A collection of minimalist Ansible playbooks for automating server setups.
 - [Initial ansible setup](./setup_ansible): this playbook will prepare your ansible environnements
 - [Base system configurations](./setup_base): this playbook will make base system configurations
 - [Update system packages](./update_packages/): this playbook will update RHEL & Debian family Linux distros. 
-- [Install Docker CE](./setup_docker/): this playbook install docker-ce
+- [Install Docker CE](./setup_docker/): this playbook installs docker-ce
 - [Install Docker Swarm](./setup_dockerswarm/): this playbook configure a docker swarm cluster
-- [Install GlusterFS](./setup_glusterfs/): this playbook install and configure a glusterfs cluster (distributed file system)
-- [Install Terraform](./setup_terraform/): this playbook install terraform
+- [Install GlusterFS](./setup_glusterfs/): this playbook installs and configure a glusterfs cluster (distributed file system)
+- [Install Terraform](./setup_terraform/): this playbook installs terraform
+- [Install iptables](./setup_iptables/): this playbook activates and configure iptables
+- [Install firewalld](./setup_firewalld/): this playbook activates and configure firewalld
 
 # Inventory
 
