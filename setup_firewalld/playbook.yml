@@ -1,0 +1,7 @@
+- name: Open firewalld
+  hosts: swarm_workers
+  become: true
+  vars_files:
+    - vars/default.yml
+  tasks:
+  - import_tasks: tasks/setup_firewall.yml

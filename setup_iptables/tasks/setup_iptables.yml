@@ -1,0 +1,10 @@
+- name: install iptables service
+  ansible.builtin.package:
+    name: iptables-services
+    state: latest
+
+- name: Start iptables service
+  ansible.builtin.service:
+    name: iptables
+    state: started
+    enabled: yes

@@ -1,0 +1,10 @@
+tcp:
+- "22" # ssh
+- "2376" # secure Docker client communication
+- "2377" # communication between the nodes and managers
+- "7946" # communication among nodes
+- "24007" # glusterfs
+- "49152" # glusterfs
+udp:
+- "7946" # communication among nodes
+- "4789" # overlay network traffic

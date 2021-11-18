@@ -1,0 +1,46 @@
+
+- name: Iptables flush filter
+  ansible.builtin.iptables:
+    chain: INPUT
+    flush: yes
+
+- name: Allow related and established connections
+  ansible.builtin.iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: Allow ICMP
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: icmp
+    jump: ACCEPT
+
+- name: Allow TCP connections on multiple ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_ports:
+      - "22" # ssh
+      - "2376" # secure Docker client communication
+      - "2377" # communication between the nodes and managers
+      - "7946" # communication among nodes
+      - "24007" # glusterfs
+      - "49152" # glusterfs
+    ctstate: NEW
+    jump: ACCEPT
+
+- name: Allow UDP on multiple ports
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: udp
+    destination_ports:
+      - "7946" # communication among nodes
+      - "4789" # overlay network traffic
+    jump: ACCEPT
+
+- name: Reject all
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: all
+    reject_with: icmp-host-prohibited

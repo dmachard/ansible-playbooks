@@ -1,0 +1,16 @@
+- hosts: all
+  become: true
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+     - name: Setup iptables
+      include_tasks: tasks/setup_iptables.yml
+
+    - name: Configure iptables
+      include_tasks: tasks/configure_iptables.yml
+
+    - name: Save current state of the firewall in system file
+      community.general.iptables_state:
+        state: saved
+        path: /etc/sysconfig/iptables
