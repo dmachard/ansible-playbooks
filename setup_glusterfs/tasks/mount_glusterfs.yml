@@ -12,5 +12,5 @@
     name: "{{ mount_dir }}"
     src: localhost:/volume01
     fstype: glusterfs
-    opts: "defaults,_netdev"
+    opts: "defaults,_netdev,noauto,x-systemd.automount"
     state: mounted
