@@ -31,7 +31,7 @@ $ cat /etc/hosts
 
 $ cat inventory.ini
 
-```
+```bash
 [swarm_managers]
 docker-manager01
 
@@ -47,26 +47,25 @@ swarm_workers
 docker-manager01
 docker-worker01
 docker-worker02
-
 ```
 
 # Run-it
 
 Run the playbook *setup_ansible* to make ready your server for ansible.
 
-```
+```bash
 ansible-playbook --limit "docker-worker01" -u osadmin setup_ansible/playbook.yml 
 ```
 
 Run this playbook to make the base system configurations
 
-```
+```bash
 ansible-playbook --limit "docker-manager01" setup_base/playbook.yml
 ```
 
 Install docker swarm
 
-```
+```bash
 ansible-playbook setup_docker/playbook.yml
 ansible-playbook setup_dockerswarm/playbook.yml
 ansible-playbook setup_glusterfs/playbook.yml
@@ -74,6 +73,14 @@ ansible-playbook setup_glusterfs/playbook.yml
 
 Example to install Terraform only on your ansible machine
 
-```
+```bash
 ansible-playbook --limit ansible setup_terraform/playbook.yml
+```
+
+# Ops
+
+```bash
+ansible all -a "cat /etc/hosts"
+ansible all -a "sudo dnf -y install tcpdump"
+ansible all -a "systemctl status glusterd"
 ```
