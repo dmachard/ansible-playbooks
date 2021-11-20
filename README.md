@@ -77,7 +77,7 @@ Example to install Terraform only on your ansible machine
 ansible-playbook --limit ansible setup_terraform/playbook.yml
 ```
 
-# Ops
+# Cheat sheet
 
 ```bash
 ansible all -a "cat /etc/hosts"
