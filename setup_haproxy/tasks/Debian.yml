@@ -1,0 +1,12 @@
+
+- name: Install Haproxy
+  apt:
+    name: haproxy
+    state: latest
+    update_cache: yes
+    
+- name: Start service
+  ansible.builtin.service:
+    name: haproxy
+    enabled: yes
+    state: started

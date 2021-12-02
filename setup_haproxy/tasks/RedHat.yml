@@ -1,0 +1,16 @@
+      
+- name: Enable EPEL Repository
+  dnf:
+   name: epel-release
+   state: latest
+
+- name: Install haproxy
+  ansible.builtin.dnf:
+    name : haproxy
+    state: latest
+
+- name: Start service haproxy
+  ansible.builtin.service:
+    name: haproxy
+    enabled: yes
+    state: started

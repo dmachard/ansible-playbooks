@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Running for {{ ansible_os_family }}
+      include_tasks: tasks/{{ ansible_os_family }}.yml
+
+    - name: push config
+      include_tasks: tasks/setup_config.yml
