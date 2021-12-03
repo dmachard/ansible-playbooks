@@ -1,0 +1,9 @@
+- name: copy file
+  ansible.builtin.copy:
+    src: ../files/keepalived.cfg
+    dest: /etc/keepalived/keepalived.cfg
+
+- name: reload keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: reloaded

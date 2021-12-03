@@ -11,6 +11,8 @@ A collection of minimalist Ansible playbooks for automating server setups.
 - [Install Terraform](./setup_terraform/): this playbook installs terraform
 - [Install iptables](./setup_iptables/): this playbook activates and configure iptables
 - [Install firewalld](./setup_firewalld/): this playbook activates and configure firewalld
+- [Install haproxy](./setup_haproxy/): this playbook isntalls and configure haproxy
+- [Install keepalived](./setup_keepalived/): this playbook installs and configure keepalived
 
 # Inventory
 

@@ -1,0 +1,11 @@
+      
+- name: Install keepalived
+  ansible.builtin.apt:
+    name : keepalived
+    state: latest
+
+- name: Start service
+  ansible.builtin.service:
+    name: keepalived
+    enabled: yes
+    state: started

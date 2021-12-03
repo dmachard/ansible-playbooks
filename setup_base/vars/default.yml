@@ -7,3 +7,4 @@ packages:
 - tcpdump
 - net-tools
 - ca-certificates
+- psmisc
