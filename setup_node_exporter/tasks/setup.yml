@@ -1,0 +1,42 @@
+- name: Ensure group exists
+  ansible.builtin.group:
+    name: promnode
+    state: present
+
+- name: add user
+  ansible.builtin.user:
+    name: promnode
+    group: promnode
+
+- name: Download Node Exporter {{ node_version }}
+  ansible.builtin.get_url:
+    url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_version }}/node_exporter-{{ node_version}}.linux-amd64.tar.gz
+    dest: /tmp/node_exporter-{{ node_version }}.linux-amd64.tar.gz
+    force: yes
+
+- name: Extract archive
+  ansible.builtin.unarchive:
+    src: /tmp/node_exporter-{{ node_version }}.linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Install binary
+  ansible.builtin.copy: 
+    remote_src: true
+    src: /tmp/node_exporter-{{ node_version }}.linux-amd64/node_exporter
+    dest: /usr/local/bin/
+    owner: promnode
+    group: promnode
+    mode: +x
+
+- name: Install binary
+  ansible.builtin.copy:
+    src: ../files/node_exporter.service
+    dest: /etc/systemd/system/
+
+- name: Start service
+  ansible.builtin.systemd:
+    state: restarted
+    daemon_reload: yes
+    name: node_exporter
+    enabled: yes

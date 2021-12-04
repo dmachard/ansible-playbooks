@@ -1,0 +1,8 @@
+- hosts: all
+  become: true
+  vars_files:
+  - vars/default.yml
+
+  tasks:
+  - name: Setup node exporter
+    include_tasks: tasks/setup.yml

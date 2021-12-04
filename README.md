@@ -13,6 +13,7 @@ A collection of minimalist Ansible playbooks for automating server setups.
 - [Install firewalld](./setup_firewalld/): this playbook activates and configure firewalld
 - [Install haproxy](./setup_haproxy/): this playbook isntalls and configure haproxy
 - [Install keepalived](./setup_keepalived/): this playbook installs and configure keepalived
+- [Install node exporter](./setup_node_exporter/): this playbook installs prometheus node exporter
 
 # Inventory
 
