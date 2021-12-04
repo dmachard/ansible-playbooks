@@ -20,24 +20,18 @@
   ansible.builtin.iptables:
     chain: INPUT
     protocol: tcp
-    destination_ports:
-      - "22" # ssh
-      - "2376" # secure Docker client communication
-      - "2377" # communication between the nodes and managers
-      - "7946" # communication among nodes
-      - "24007" # glusterfs
-      - "49152" # glusterfs
+    destination_ports: "{{ item }}"
     ctstate: NEW
     jump: ACCEPT
+  loop: "{{ tcp_ports }}"
 
 - name: Allow UDP on multiple ports
   ansible.builtin.iptables:
     chain: INPUT
     protocol: udp
-    destination_ports:
-      - "7946" # communication among nodes
-      - "4789" # overlay network traffic
+    destination_ports: "{{ item }}"
     jump: ACCEPT
+  loop: "{{ udp_ports }}"
 
 - name: Reject all
   ansible.builtin.iptables:
